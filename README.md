@@ -1,1 +1,1 @@
-simple project to shutdown or reboot or put your system in hibernate mode
+simple project to shutdown or reboot or put your system in hibernate mode in Java
