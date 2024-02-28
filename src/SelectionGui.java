@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SelectionGui extends AutoShutdown {
     public SelectionGui() {
@@ -49,16 +50,67 @@ public class SelectionGui extends AutoShutdown {
         JButton RebootButton = new JButton("Reboot");
         RebootButton.setBounds(70, 200, super.getWidth() - 150, 24);
         RebootButton.setFont(new Font("Dialog", Font.PLAIN, 16));
+        RebootButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String minutesImput = JOptionPane.showInputDialog(SelectionGui.this, "How many minutes do you want to reboot your computer?");
+                if (minutesImput != null) {
+                    try {
+                        int minutes = Integer.parseInt(minutesImput);
+                        rebootComputer(minutes);
+                        }catch(NumberFormatException ex){
+                            JOptionPane.showMessageDialog(SelectionGui.this, "Invalid input. Please enter a valid number of minutes.");
+                        }
+
+
+                }
+
+            }
+        });
         add(RebootButton);
 
         JButton HibernateButton = new JButton("Hibernate");
         HibernateButton.setBounds(70, 300, super.getWidth() - 150, 24);
         HibernateButton.setFont(new Font("Dialog", Font.PLAIN, 16));
+
+        HibernateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String minutesImput = JOptionPane.showInputDialog(SelectionGui.this, "How many minutes do you want to hibernate your computer?");
+                if (minutesImput != null ){
+                    try {
+                        int minutes = Integer.parseInt(minutesImput);
+                        hibernateComputer(minutes);
+                    }catch (NumberFormatException ex){
+                        JOptionPane.showMessageDialog(SelectionGui.this,"Invalid input. Please enter a valid number of minutes.");
+                    }
+                }
+            }
+        });
         add(HibernateButton);
     }
 
     // Método para desligar o computador (não implementado neste exemplo)
     private void shutdownComputer(int minutes) {
-        // Implemente a lógica de desligamento aqui
+                                            //lógica de desligamento aqui
+        String command = "shutdown -s -t " + (minutes * 60);
+        try {
+            // Executar o comando no CMD
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Esperar até que o comando seja concluído
+            process.waitFor();
+            System.out.println("Computador será desligado em " + minutes + " minutos.");
+        }
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    private void rebootComputer(int minutes){
+                                            //lógica de reboot aqui
+    }
+
+    private void hibernateComputer(int minutes){
+                                            //lógica de hibernação aqui
     }
 }
