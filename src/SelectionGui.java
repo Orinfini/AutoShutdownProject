@@ -7,6 +7,7 @@ import java.io.IOException;
 public class SelectionGui extends AutoShutdown {
     public SelectionGui() {
         super("Auto Shutdown");
+
     }
 
     @Override
@@ -23,6 +24,8 @@ public class SelectionGui extends AutoShutdown {
         AutoShutdownLabel.setFont(new Font("Dialog", Font.BOLD, 32));
         // Centraliza o texto na interface
         AutoShutdownLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        getContentPane().setBackground(new Color(47,212,181));
+        LinearGradientPaint Classe;
         // Adiciona a interface
         add(AutoShutdownLabel);
 
@@ -38,73 +41,110 @@ public class SelectionGui extends AutoShutdown {
                 if (minutesInput != null) {
                     try {
                         int minutes = Integer.parseInt(minutesInput); // Converte a entrada do usuário para um número inteiro
-                        shutdownComputer(String.valueOf(minutes)); // Chama o método para desligar o computador com o número de minutos especificado
-                        shutdownComputer("shutdown -s -t " + (minutes * 60)); // Adicionado o comando de desligamento com o tempo especificado
-
+                        shutdownComputer(minutes); // Chama o método para desligar o computador com o número de minutos especificado
                     } catch (NumberFormatException ex) { // Se a entrada do usuário não puder ser convertida para um número inteiro
                         JOptionPane.showMessageDialog(SelectionGui.this, "Invalid input. Please enter a valid number of minutes."); // Exibe uma mensagem de erro
                     }
                 }
             }
         });
+        // Centralizando o botão Shutdown
+        int buttonWidth = super.getWidth() - 150; // Calcula a largura do botão subtraindo 150 pixels da largura total da janela
+        int buttonHeight = 24; // Define a altura do botão como 24 pixels
+        int buttonX = (super.getWidth() - buttonWidth) / 2; // Calcula a posição horizontal do botão para centralizá-lo na janela
+        int buttonY = (super.getHeight() - 40 - buttonHeight * 2 - 20) / 2;// Calcula a posição vertical do botão para centralizá-lo na janela, considerando o espaço ocupado pela label e o espaçamento entre os botões
+        ShutdownButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);// Define os limites do botão (posição e tamanho) com base nos cálculos anteriores
+
         add(ShutdownButton);
 
         JButton RebootButton = new JButton("Reboot");
         RebootButton.setBounds(70, 200, super.getWidth() - 150, 24);
         RebootButton.setFont(new Font("Dialog", Font.PLAIN, 16));
-
         RebootButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String minutesImput = JOptionPane.showInputDialog(SelectionGui.this, "How many minutes do you want reboot your computer?");
-                if (minutesImput != null){
+                String minutesImput = JOptionPane.showInputDialog(SelectionGui.this, "How many minutes do you want to reboot your computer?");
+                if (minutesImput != null) {
                     try {
                         int minutes = Integer.parseInt(minutesImput);
-                        rebootComputer(String.valueOf(minutes));
-                        rebootComputer("shutdown -r -t " + (minutes * 60));
+                        rebootComputer(minutes);
+                        }catch(NumberFormatException ex){
+                            JOptionPane.showMessageDialog(SelectionGui.this, "Invalid input. Please enter a valid number of minutes.");
+                        }
+
+
+                }
+
+            }
+        });
+<<<<<<<<< Temporary merge branch 1
+        add(RebootButton);
+
+        JButton HibernateButton = new JButton("Hibernate");
+        HibernateButton.setBounds(70, 300, super.getWidth() - 150, 24);
+        HibernateButton.setFont(new Font("Dialog", Font.PLAIN, 16));
+
+        HibernateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String minutesImput = JOptionPane.showInputDialog(SelectionGui.this, "How many minutes do you want to hibernate your computer?");
+                if (minutesImput != null ){
+                    try {
+                        int minutes = Integer.parseInt(minutesImput);
+                        hibernateComputer(minutes);
                     }catch (NumberFormatException ex){
-                        JOptionPane.showMessageDialog(SelectionGui.this, "Invalid input. Please enter a valid number of minutes");
+                        JOptionPane.showMessageDialog(SelectionGui.this,"Invalid input. Please enter a valid number of minutes.");
                     }
                 }
             }
         });
+        add(HibernateButton);
+=========
+        int buttonYReboot = buttonY + buttonHeight + 40; // Espaçamento de 40 pixels entre os botões
+        RebootButton.setBounds(buttonX, buttonYReboot, buttonWidth, buttonHeight);
         add(RebootButton);
 
+
+>>>>>>>>> Temporary merge branch 2
     }
 
-    // Implemente a lógica de desligamento aqui
-    private void shutdownComputer(String command) {
+    // Método para desligar o computador (não implementado neste exemplo)
+    private void shutdownComputer(int minutes) {
+                                            //lógica de desligamento aqui
+        String command = "shutdown -s -t " + (minutes * 60);
         try {
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",command);
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-           
-            int exitCode = process.waitFor();
-        } catch (IOException | InterruptedException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed execute command: "+ ex.getMessage());
+            // Executar o comando no CMD
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Esperar até que o comando seja concluído
+            process.waitFor();
+            System.out.println("Computador será desligado em " + minutes + " minutos.");
         }
-
-
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+<<<<<<<<< Temporary merge branch 1
+    }
+    private void rebootComputer(int minutes){
+                                            //lógica de reboot aqui
     }
 
-
-    private void rebootComputer(String command){
-        try {
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",command);
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-
-            int exitCode = process.waitFor();
-        } catch (IOException | InterruptedException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Failed execute command: "+ ex.getMessage());
-        }
-
-
+    private void hibernateComputer(int minutes){
+                                            //lógica de hibernação aqui
+=========
+>>>>>>>>> Temporary merge branch 2
     }
-
-
+    private void rebootComputer(int minutes){
+                                            //lógica de reboot aqui
+        String command ="shutdown -r -t "+(minutes * 60);
+        try{
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            System.out.println("The compute will reboot in "+minutes+"minutes");
+        }
+        catch (IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
 
 }
-
