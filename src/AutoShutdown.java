@@ -12,7 +12,7 @@ public abstract class AutoShutdown extends JFrame {
     }
     private void initialize (String title){
 
-    // instancia as propriedades do iframe e adiciona um titulo na barra
+    // instancia as propriedadess do iframe e adiciona um titulo na barra
         setTitle(title);
     // define o tamanho (em pixels)
         setSize(400, 300);
