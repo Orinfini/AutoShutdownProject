@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /*
-    Criando uma classe abstracta ajuda a configurar o modelo que as gui's seguirá, por exemplo em cada uma das gui's elas
+    Criando uma classe abstract ajuda a configurar o modelo que as gui's seguirá, por exemplo em cada uma das gui's elas
   terão os mesmos tamanhos e precisarão invocar seus proprios addGUicomponents() que serão exclusivos para cada subclasse
  */
 public abstract class AutoShutdown extends JFrame {

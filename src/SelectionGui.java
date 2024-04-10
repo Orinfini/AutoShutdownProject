@@ -27,7 +27,7 @@ public class SelectionGui extends AutoShutdown {
                 if (minutesInput != null) {
                     try {
                         int minutes = Integer.parseInt(minutesInput);
-                        executeShutdownCommand("shutdown -s -t " + (minutes * 60)); // Chamando método específico para desligamento
+                        executeShutdownCommand("shutdown -s -t " + (minutes * 60)); // Chamando métdo específico para desligamento
                     } catch (NumberFormatException ex) {
                         JOptionPane.showMessageDialog(SelectionGui.this, "Invalid input. Please enter a valid number of minutes.");
                     }
